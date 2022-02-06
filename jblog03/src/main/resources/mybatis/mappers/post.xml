@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+	
+	<select id="findById" parameterType="String" resultType="postvo">
+		<![CDATA[
+			   SELECT no
+			         ,title
+			         ,contents
+			         ,reg_date as regDate
+			         ,category_no as categoryNo 
+			     FROM post
+			    WHERE category_no = (SELECT MAX(no) 
+			                           FROM category
+			                          WHERE blog_id = #{_parameter }
+			                        )
+			 ORDER BY no DESC
+		]]>
+	</select>
+	
+</mapper>

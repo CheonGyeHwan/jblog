@@ -22,6 +22,26 @@
 	<!-- mvc url-resource mapping -->
 
 	<!-- Interceptors -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="com.poscoict.jblog.security.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.poscoict.jblog.security.LogoutInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/admin/**" />
+			<bean class="com.poscoict.jblog.security.AdminAuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 	<!-- ViewResolver -->
 	<bean id="ViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -31,6 +51,13 @@
 	</bean>
 	
 	<!-- MessageSource -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value>
+			</list>
+		</property>
+	</bean>
 
 	<!-- 멀티파트 리졸버 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
