@@ -19,4 +19,8 @@ public class BlogRepository {
 		return sqlSession.selectOne("blog.findById", id);
 	}
 	
+	public boolean update(BlogVo blogVo) {
+		return sqlSession.update("blog.update", blogVo) == 1;
+	}
+	
 }

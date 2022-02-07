@@ -18,14 +18,14 @@
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
-					<h4>${view.title }</h4>
+					<h4>${postVo.title }</h4>
 					<p>
-						${fn:replace(view.contents, newline, "<br/>") }
+						${fn:replace(postVo.contents, newline, "<br/>") }
 					</p>
 				</div>
 				<ul class="blog-list">
-					<c:forEach items='${post }' var='post'>
-						<li><a href="${pageContext.request.contextPath}/${blog.blogId }/${category.no }/${post.no }">${post.title }</a><span>${post.regDate }</span></li>
+					<c:forEach items='${postList }' var='postList'>
+						<li><a href="${pageContext.request.contextPath}/${blogVo.blogId }/${categoryVo.no }/${postList.no }">${postList.title }</a><span>${postList.regDate }</span></li>
 					</c:forEach>
 				</ul>
 			</div>
@@ -33,7 +33,7 @@
 
 		<div id="extra">
 			<div class="blog-logo">
-				<img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+				<img src="${pageContext.request.contextPath}${blogVo.logo }">
 			</div>
 		</div>
 

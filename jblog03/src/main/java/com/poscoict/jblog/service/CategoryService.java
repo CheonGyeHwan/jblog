@@ -1,6 +1,7 @@
 package com.poscoict.jblog.service;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.poscoict.jblog.repository.CategoryRepository;
@@ -16,7 +17,9 @@ public class CategoryService {
 		return categoryRepository.insertForJoin(userVo);
 	}
 	
-	public List<CategoryVo> getCategory(String id) {
+	public List<CategoryVo> getCategory(Map<String, Object> map) {
+		String id = (String)map.get("id");
+		
 		return categoryRepository.findById(id);
 	}
 	

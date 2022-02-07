@@ -5,8 +5,8 @@
 <div id="navigation">
 	<h2>카테고리</h2>
 	<ul>
-		<c:forEach items='${category }' var='category'>
-			<li><a href="${pageContext.request.contextPath}/${category.blogId }/${category.no }">${category.name }</a></li>
+		<c:forEach items='${categoryVo }' var='categoryVo'>
+			<li><a href="${pageContext.request.contextPath}/${categoryVo.blogId }/${categoryVo.no }">${categoryVo.name }</a></li>
 		</c:forEach>
 	</ul>
 </div>

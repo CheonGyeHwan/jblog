@@ -19,4 +19,30 @@
 		]]>
 	</select>
 	
+	<select id="findByCategoryNo" parameterType="Long" resultType="postvo">
+		<![CDATA[
+			   SELECT no
+			         ,title
+			         ,contents
+			         ,reg_date as regDate
+			         ,category_no as categoryNo 
+			     FROM post
+			    WHERE category_no = #{_parameter }
+			 ORDER BY no DESC
+		]]>
+	</select>
+	
+	<select id="findByCategoryNoAndPostNo" parameterType="map" resultType="postvo">
+		<![CDATA[
+			   SELECT no
+			         ,title
+			         ,contents
+			         ,reg_date as regDate
+			         ,category_no as categoryNo 
+			     FROM post
+			    WHERE category_no = #{categoryNo }
+			      AND no = #{postNo }
+		]]>
+	</select>
+	
 </mapper>
