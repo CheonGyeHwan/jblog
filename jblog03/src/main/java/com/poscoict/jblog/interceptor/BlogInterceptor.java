@@ -19,13 +19,13 @@ public class BlogInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		ServletContext servletContext = request.getServletContext();
 		
-		Map<String, String> pathVariables = (Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-		String id = pathVariables.get("id");
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		
 		if (servletContext.getAttribute("blogVo") == null) {
+			Map<String, String> pathVariables = (Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+			String id = pathVariables.get("id");
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("id", id);
+			
 			servletContext.setAttribute("blogVo", blogService.getBlog(map));
 			return true;
 		}

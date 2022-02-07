@@ -28,13 +28,13 @@ public class BlogService {
 	
 	public BlogVo getBlog(Map<String, Object> map) {
 		String id = (String)map.get("id");
-
+		
 		return blogRepository.findById(id);		
 	}
 	
 	public boolean update(BlogVo blogVo, MultipartFile newLogo) {
 		String SAVE_PATH = "/upload-images";
-		String URL_BASE = "/images";
+		String URL_BASE = "/assets/images";
 		String url = null;
 		
 		try {

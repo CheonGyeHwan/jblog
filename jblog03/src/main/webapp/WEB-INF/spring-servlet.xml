@@ -20,7 +20,7 @@
 	<mvc:default-servlet-handler />
 	
 	<!-- mvc url-resource mapping -->
-	<mvc:resources mapping="/images/**" location="file:/upload-images/" />
+	<mvc:resources mapping="/assets/images/**" location="file:/upload-images/" />
 
 	<!-- Interceptors -->
 	<mvc:interceptors>
@@ -49,7 +49,6 @@
 			<mvc:mapping path="/**" />
 				<mvc:exclude-mapping path=""/>
 				<mvc:exclude-mapping path="/user/**"/>
-				<mvc:exclude-mapping path="/assets/**"/>
 			<bean class="com.poscoict.jblog.interceptor.BlogInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

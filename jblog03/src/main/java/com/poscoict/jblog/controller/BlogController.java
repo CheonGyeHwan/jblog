@@ -34,8 +34,8 @@ public class BlogController {
 					   @PathVariable("pathNo1") Optional<Long> pathNo1,
 					   @PathVariable("pathNo2") Optional<Long> pathNo2,
 					   Model model) {
-		Long categoryNo = 0L;
-		Long postNo = 0L;
+		Long categoryNo = null;
+		Long postNo = null;
 		
 		if (pathNo2.isPresent()) {
 			categoryNo = pathNo1.get();

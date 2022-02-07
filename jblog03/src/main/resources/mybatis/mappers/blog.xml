@@ -5,7 +5,7 @@
 	
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[
-			INSERT INTO blog VALUES ("${name }님의 블로그입니다.", "/images/123123.png", #{id })
+			INSERT INTO blog VALUES ("${name }님의 블로그입니다.", "/assets/images/default.png", #{id })
 		]]>
 	</insert>
 	
@@ -21,7 +21,7 @@
 	
 	<update id="update" parameterType="blogvo">
 		<![CDATA[
-			UPDATE blog SET title = #{title }, logo = #{logo } WHERE user_id = #{user_id }
+			UPDATE blog SET title = #{title }, logo = #{logo } WHERE user_id = #{userId }
 		]]>
 	</update>
 	

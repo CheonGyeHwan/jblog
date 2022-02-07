@@ -19,12 +19,12 @@
 					<li><a href="">카테고리</a></li>
 					<li><a href="">글작성</a></li>
 				</ul>
-				<form action="${pageContext.request.contextPath}/admin/basic/update" method="post">
+				<form action="${pageContext.request.contextPath}/${authUser.id }/admin/basic/update" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="userId" value=${authUser.id }>
 	 		      	<table class="admin-config">
 			      		<tr>
 			      			<td class="t">블로그 제목</td>
-			      			<td><input type="text" size="40" name="title"></td>
+			      			<td><input type="text" size="40" name="title" value=${blogVo.title }></td>
 			      		</tr>
 			      		<tr>
 			      			<td class="t">로고이미지</td>
