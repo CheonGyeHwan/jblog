@@ -20,7 +20,7 @@
 	<mvc:default-servlet-handler />
 	
 	<!-- mvc url-resource mapping -->
-	<mvc:resources mapping="/assets/images/**" location="file:/upload-images/" />
+	<mvc:resources mapping="/assets/logo/**" location="file:/upload-images/" />
 
 	<!-- Interceptors -->
 	<mvc:interceptors>
@@ -47,12 +47,10 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-				<mvc:exclude-mapping path=""/>
-				<mvc:exclude-mapping path="/user/**"/>
 			<bean class="com.poscoict.jblog.interceptor.BlogInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-
+ 
 	<!-- ViewResolver -->
 	<bean id="ViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />

@@ -23,5 +23,13 @@ public class PostRepository {
 	public PostVo findByCategoryNoAndPostNo(Map<String, Object> map) {
 		return sqlSession.selectOne("post.findByCategoryNoAndPostNo", map);
 	}
+	
+	public List<Map<String, Long>> getPostCount(String id) {
+		return sqlSession.selectList("post.getPostCount", id);
+	}
+	
+	public boolean addPost(PostVo postVo) {
+		return sqlSession.insert("post.addPost", postVo) == 1;
+	}
 
 }

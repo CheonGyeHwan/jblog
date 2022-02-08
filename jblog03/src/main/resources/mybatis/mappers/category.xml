@@ -21,4 +21,16 @@
 		]]>
 	</select>
 	
+	<insert id="addCategory" parameterType="categoryvo">
+		<![CDATA[
+			INSERT INTO category VALUES (NULL, #{name }, #{description }, #{blogId })
+		]]>
+	</insert>
+	
+	<delete id="deleteCategory" parameterType="Long">
+		<![CDATA[
+			DELETE FROM category WHERE no = #{_parameter }
+		]]>
+	</delete>
+	
 </mapper>

@@ -5,7 +5,7 @@
 	
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[
-			INSERT INTO blog VALUES ("${name }님의 블로그입니다.", "/assets/images/default.png", #{id })
+			INSERT INTO blog VALUES ("${name }님의 블로그입니다.", "/assets/logo/default.png", #{id })
 		]]>
 	</insert>
 	

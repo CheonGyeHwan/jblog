@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
-import java.util.Map;
 import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,15 +25,13 @@ public class BlogService {
 		return blogRepository.insert(userVo);
 	}
 	
-	public BlogVo getBlog(Map<String, Object> map) {
-		String id = (String)map.get("id");
-		
+	public BlogVo getBlog(String id) {
 		return blogRepository.findById(id);		
 	}
 	
 	public boolean update(BlogVo blogVo, MultipartFile newLogo) {
 		String SAVE_PATH = "/upload-images";
-		String URL_BASE = "/assets/images";
+		String URL_BASE = "/assets/logo";
 		String url = null;
 		
 		try {

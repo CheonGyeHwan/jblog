@@ -20,4 +20,12 @@ public class CategoryRepository {
 		return sqlSession.selectList("category.findById", id);
 	}
 	
+	public boolean addCategory(CategoryVo categoryVo) {
+		return sqlSession.update("category.addCategory", categoryVo) == 1;
+	}
+	
+	public boolean deleteCategory(Long no) {
+		return sqlSession.update("category.deleteCategory", no) == 1;
+	}
+	
 }

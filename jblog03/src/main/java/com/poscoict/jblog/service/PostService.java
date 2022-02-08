@@ -1,5 +1,6 @@
 package com.poscoict.jblog.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,7 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	public List<PostVo> getPostList(Map<String, Object> map) {
-		String id = (String)map.get("id");
-		Long categoryNo = (Long)map.get("categoryNo");
-		
+	public List<PostVo> getPostList(String id, Long categoryNo) {
 		if (categoryNo != null) {
 			return postRepository.findByCategoryNo(categoryNo);
 		} else {
@@ -24,17 +22,30 @@ public class PostService {
 	
 	}
 	
-	public PostVo getPost(Map<String, Object> map) {
-		if (map.get("postNo") != null) {
+	public PostVo getPost(String id, Long categoryNo, Long postNo) {
+		if (postNo != null) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("id", id);
+			map.put("categoryNo", categoryNo);
+			map.put("postNo", postNo);
+			
 			return postRepository.findByCategoryNoAndPostNo(map);
 		}
 		
-		List<PostVo> postList = getPostList(map);
+		List<PostVo> postList = getPostList(id, categoryNo);
 		if (postList.isEmpty()) {
 			return null;
 		}
 		
 		return postList.get(0);
+	}
+	
+	public List<Map<String, Long>> getPostCount(String id) {
+		return postRepository.getPostCount(id);
+	}
+	
+	public boolean addPost(PostVo postVo) {
+		return postRepository.addPost(postVo);
 	}
 	
 }

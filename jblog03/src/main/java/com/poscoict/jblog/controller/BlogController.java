@@ -1,7 +1,5 @@
 package com.poscoict.jblog.controller;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,8 @@ import com.poscoict.jblog.service.BlogService;
 import com.poscoict.jblog.service.CategoryService;
 import com.poscoict.jblog.service.PostService;
 import com.poscoict.jblog.vo.BlogVo;
+import com.poscoict.jblog.vo.CategoryVo;
+import com.poscoict.jblog.vo.PostVo;
 
 @Controller
 @RequestMapping("/{id:(?!assets).*}")
@@ -44,30 +44,61 @@ public class BlogController {
 			categoryNo = pathNo1.get();
 		}
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("categoryNo", categoryNo);
-		map.put("postNo", postNo);
-		
-		model.addAttribute("blogVo", blogService.getBlog(map));
-		model.addAttribute("categoryVo", categoryService.getCategory(map));
-		model.addAttribute("postList", postService.getPostList(map));
-		model.addAttribute("postVo", postService.getPost(map));
+		model.addAttribute("blogVo", blogService.getBlog(id));
+		model.addAttribute("categoryVo", categoryService.getCategory(id));
+		model.addAttribute("postList", postService.getPostList(id, categoryNo));
+		model.addAttribute("postVo", postService.getPost(id, categoryNo, postNo));
 		
 		return "blog/blog-main";
 	}
 	
 	@AdminAuth
-	@RequestMapping("/admin/basic")
+	@RequestMapping(value="/admin/basic", method=RequestMethod.GET)
 	public String adminBasic(@PathVariable("id") String id) {
 		return "blog/blog-admin-basic";
 	}
 	
 	@AdminAuth
-	@RequestMapping(value="/admin/basic/update", method=RequestMethod.POST)
-	public String blogUpdate(BlogVo blogVo, @RequestParam(value="newLogo") MultipartFile newLogo) {
+	@RequestMapping(value="/admin/basic", method=RequestMethod.POST)
+	public String updateBlog(BlogVo blogVo, @RequestParam(value="newLogo") MultipartFile newLogo) {
 		blogService.update(blogVo, newLogo);
 		return "redirect:/" + blogVo.getUserId();
+	}
+	
+	@AdminAuth
+	@RequestMapping("/admin/category")
+	public String adminCategory(@PathVariable("id") String id, Model model) {
+		model.addAttribute("categoryVo", categoryService.getCategory(id));
+		model.addAttribute("postCount", postService.getPostCount(id));
+		return "blog/blog-admin-category";
+	}
+	
+	@AdminAuth
+	@RequestMapping(value="/admin/category/add", method=RequestMethod.POST)
+	public String addCategory(@PathVariable("id") String id, CategoryVo categoryVo) {
+		categoryService.addCategory(categoryVo);
+		return "redirect:/" + id + "/admin/category";
+	}
+	
+	@AdminAuth
+	@RequestMapping("/admin/category/delete/{no}")
+	public String deleteCategory(@PathVariable("id") String id, @PathVariable("no") Long no) {
+		categoryService.deleteCategory(id, no);
+		return "redirect:/" + id + "/admin/category";
+	}
+	
+	@AdminAuth
+	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
+	public String adminWrite(@PathVariable("id") String id, Model model) {
+		model.addAttribute("categoryVo", categoryService.getCategory(id));
+		return "blog/blog-admin-write";
+	}
+	
+	@AdminAuth
+	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
+	public String adminWrite(@PathVariable("id") String id, PostVo postVo, Model model) {
+		postService.addPost(postVo);
+		return "redirect:/" + id;
 	}
 	
 }

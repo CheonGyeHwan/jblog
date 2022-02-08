@@ -45,4 +45,26 @@
 		]]>
 	</select>
 	
+	<select id="getPostCount" parameterType="String" resultType="map">
+		<![CDATA[
+			  SELECT categoryNo as categoryNo
+			        ,COUNT(postNo) as count
+			    FROM (         SELECT a.no AS categoryNo
+			   	  		            , b.no AS postNo
+			                     FROM category a
+			          LEFT OUTER JOIN post b
+			                       ON a.no = b.category_no
+			 	     ) AS joinTable
+			   WHERE categoryNo IN (SELECT no FROM category WHERE blog_id = #{_parameter })
+			GROUP BY categoryNo
+			ORDER BY categoryNo DESC
+		]]>
+	</select>
+	
+	<insert id="addPost" parameterType="postvo">
+		<![CDATA[
+			INSERT INTO post VALUES (NULL, #{title }, #{contents }, NOW(), #{categoryNo })
+		]]>
+	</insert>
+	
 </mapper>

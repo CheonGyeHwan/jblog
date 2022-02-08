@@ -1,6 +1,5 @@
 package com.poscoict.jblog.interceptor;
 
-import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +18,19 @@ public class BlogInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		ServletContext servletContext = request.getServletContext();
 		
+		Map<String, String> pathVariables = (Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		if (pathVariables == null) {
+			return true;
+		}
+		
+		if (pathVariables.get("id") == null) {
+			return true;
+		}
+		
 		if (servletContext.getAttribute("blogVo") == null) {
-			Map<String, String> pathVariables = (Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 			String id = pathVariables.get("id");
 			
-			Map<String, Object> map = new HashMap<>();
-			map.put("id", id);
-			
-			servletContext.setAttribute("blogVo", blogService.getBlog(map));
+			servletContext.setAttribute("blogVo", blogService.getBlog(id));
 			return true;
 		}
 		
