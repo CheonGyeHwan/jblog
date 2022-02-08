@@ -4,7 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +19,7 @@ public class BlogService {
 	private BlogRepository blogRepository;
 	
 	@Autowired
-	private ServletContext servletContext;
+	private HttpSession session;
 	
 	public boolean join(UserVo userVo) {
 		return blogRepository.insert(userVo);
@@ -54,7 +54,7 @@ public class BlogService {
 		}
 		
 		blogVo.setLogo(url);
-		servletContext.setAttribute("blogVo", blogVo);
+		session.setAttribute("blogVo", blogVo);
 		
 		return blogRepository.update(blogVo);
 	}
