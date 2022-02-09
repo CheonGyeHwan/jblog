@@ -30,15 +30,16 @@ public class BlogInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		String id = pathVariables.get("id");
-		BlogVo blogVo = blogService.getBlog(id);
+		BlogVo newBlogVo = blogService.getBlog(id);
 		
-		if (blogVo == null) {
+		if (newBlogVo == null) {
 			response.sendRedirect(request.getContextPath());
 			return false;
 		}
 		
-		if (session.getAttribute("blogVo") == null) {
-			session.setAttribute("blogVo", blogVo);
+		BlogVo oldBlogVo = (BlogVo)session.getAttribute("blogVo");
+		if (oldBlogVo == null || !id.equals(oldBlogVo.getUserId())) {
+			session.setAttribute("blogVo", newBlogVo);
 			return true;
 		}
 		
