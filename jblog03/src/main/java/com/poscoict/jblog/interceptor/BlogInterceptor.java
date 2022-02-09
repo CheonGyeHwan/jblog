@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.poscoict.jblog.service.BlogService;
+import com.poscoict.jblog.vo.BlogVo;
 
 public class BlogInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
@@ -28,10 +29,16 @@ public class BlogInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		
+		String id = pathVariables.get("id");
+		BlogVo blogVo = blogService.getBlog(id);
+		
+		if (blogVo == null) {
+			response.sendRedirect(request.getContextPath());
+			return false;
+		}
+		
 		if (session.getAttribute("blogVo") == null) {
-			String id = pathVariables.get("id");
-			
-			session.setAttribute("blogVo", blogService.getBlog(id));
+			session.setAttribute("blogVo", blogVo);
 			return true;
 		}
 		
