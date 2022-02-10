@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+	
+	<select id="findById" parameterType="String" resultType="postvo">
+		<![CDATA[
+			   SELECT no
+			         ,title
+			         ,contents
+			         ,reg_date as regDate
+			         ,category_no as categoryNo 
+			     FROM post
+			    WHERE category_no = (SELECT MAX(no) 
+			                           FROM category
+			                          WHERE blog_id = #{_parameter }
+			                        )
+			 ORDER BY no DESC
+		]]>
+	</select>
+	
+	<select id="findByCategoryNo" parameterType="Long" resultType="postvo">
+		<![CDATA[
+			   SELECT no
+			         ,title
+			         ,contents
+			         ,reg_date as regDate
+			         ,category_no as categoryNo 
+			     FROM post
+			    WHERE category_no = #{_parameter }
+			 ORDER BY no DESC
+		]]>
+	</select>
+	
+	<select id="findByCategoryNoAndPostNo" parameterType="map" resultType="postvo">
+		<![CDATA[
+			   SELECT no
+			         ,title
+			         ,contents
+			         ,reg_date as regDate
+			         ,category_no as categoryNo 
+			     FROM post
+			    WHERE category_no = #{categoryNo }
+			      AND no = #{postNo }
+		]]>
+	</select>
+	
+	<select id="getPostCount" parameterType="String" resultType="map">
+		<![CDATA[
+			  SELECT categoryNo as categoryNo
+			        ,COUNT(postNo) as count
+			    FROM (         SELECT a.no AS categoryNo
+			   	  		            , b.no AS postNo
+			                     FROM category a
+			          LEFT OUTER JOIN post b
+			                       ON a.no = b.category_no
+			 	     ) AS joinTable
+			   WHERE categoryNo IN (SELECT no FROM category WHERE blog_id = #{_parameter })
+			GROUP BY categoryNo
+			ORDER BY categoryNo DESC
+		]]>
+	</select>
+	
+	<insert id="addPost" parameterType="postvo">
+		<![CDATA[
+			INSERT INTO post VALUES (NULL, #{title }, #{contents }, NOW(), #{categoryNo })
+		]]>
+	</insert>
+	
+</mapper>
