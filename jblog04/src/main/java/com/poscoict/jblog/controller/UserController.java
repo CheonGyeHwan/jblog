@@ -37,11 +37,15 @@ public class UserController {
 			return "user/join";
 		}
 		
-		userService.join(userVo);
-		blogService.join(userVo);
-		categoryService.join(userVo);
-		
-		return "redirect:/user/joinsuccess";
+		if (userService.join(userVo)) {
+			blogService.join(userVo);
+			categoryService.join(userVo);
+			return "redirect:/user/joinsuccess";
+		} else {
+			result.rejectValue("id", "duplicateID", "중복된 아이디입니다.");
+			model.addAllAttributes(result.getModel());
+			return "user/join";
+		}
 	}
 	
 	@RequestMapping("/joinsuccess")

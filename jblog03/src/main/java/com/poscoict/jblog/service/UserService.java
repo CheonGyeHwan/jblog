@@ -11,6 +11,9 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public boolean join(UserVo userVo) {
+		if (userRepository.findById(userVo) != null) {
+			return false;
+		}
 		return userRepository.insert(userVo);
 	}
 	
