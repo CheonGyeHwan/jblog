@@ -1,0 +1,72 @@
+spring:
+   profiles:
+      active: dev
+
+---
+# common spring boot configuration
+spring:
+
+   # devtools - live reload
+   livereload:
+      enabled: true
+
+   # mvc
+   mvc:
+      view:
+         prefix: /WEB-INF/views/
+         suffix: .jsp
+
+   #message resource
+   messages:
+      always-message-format: true
+      basename: messages/messages_ko
+      encoding: UTF-8
+
+   # multipart
+   multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+   # AOP
+   aop:
+      auto: true
+      proxy-target-class: true
+
+---
+# dev profile spring boot configuration
+spring:
+   config:
+      activate:
+         on-profile: dev
+
+   # datasource
+   datasource:
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mysql://192.168.0.63:3307/jblog?characterEncoding=UTF-8&serverTimezone=UTC
+      username: jblog
+      password: jblog
+      hikari:
+         minimum-idle: 10
+         maximum-size: 20
+
+---
+# server
+server:
+   port: 8080
+   servlet:
+      context-path: /jblog06
+
+   # Encoding Filter
+   encoding:
+      charset: utf-8
+      enabled: true
+      force: false
+      force-request: false
+      force-response: false
+
+---
+# mybatis
+mybatis:
+   config-location: classpath:mybatis/configuration.xml
+   
