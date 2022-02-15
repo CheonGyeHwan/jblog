@@ -44,11 +44,15 @@ spring:
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
       url: jdbc:mysql://192.168.0.63:3307/jblog?characterEncoding=UTF-8&serverTimezone=UTC
-      username: jblog
-      password: jblog
+      username: ENC(FPcO8TsYyv6cO11f5oACZg==)
+      password: ENC(MUKyuRSWOMXIOeF2a+AN8w==)
       hikari:
          minimum-idle: 10
          maximum-size: 20
+
+jasypt:
+   encryptor:
+      bean: encryptor
 
 ---
 # server
